@@ -50,168 +50,309 @@ app.post("/log-incident", (req, res) => {
 });
 
 app.get("/api/questions", (req, res) => {
+
   const questions = [
     {
-      id: 1,
-      text: "What is the brain of the computer?",
-      options: ["CPU", "RAM", "Hard Drive", "Motherboard"],
+      "id": 1,
+      "text": "What does CPU stand for?",
+      "options": [
+        "Central Processing Unit",
+        "Computer Processing Unit",
+        "Central Power Unit",
+        "Computer Power Unit"
+      ]
     },
     {
-      id: 2,
-      text: "What does RAM stand for?",
-      options: [
+      "id": 2,
+      "text": "What does RAM stand for?",
+      "options": [
         "Random Access Memory",
         "Read Access Memory",
         "Run Access Memory",
-        "Random Actual Memory",
-      ],
+        "Random Actual Memory"
+      ]
     },
     {
-      id: 3,
-      text: "What is the main function of the CPU?",
-      options: ["Process data", "Store data", "Transfer data", "Delete data"],
+      "id": 3,
+      "text": "Which of the following is a programming language?",
+      "options": [
+        "HTML",
+        "CSS",
+        "Python",
+        "JPEG"
+      ]
     },
     {
-      id: 4,
-      text: "Which of the following is an input device?",
-      options: ["Keyboard", "Monitor", "Printer", "Speaker"],
+      "id": 4,
+      "text": "What is the full form of SQL?",
+      "options": [
+        "Structured Query Language",
+        "Simple Query Language",
+        "Standard Query Language",
+        "System Query Language"
+      ]
     },
     {
-      id: 5,
-      text: "What is the full form of HTML?",
-      options: [
-        "HyperText Markup Language",
-        "HyperText Machine Language",
-        "HyperText and links Markup Language",
-        "HyperTool Multi Language",
-      ],
-    },
-    {
-      id: 6,
-      text: "Which of the following is a programming language?",
-      options: ["Python", "HTML", "CSS", "SQL"],
-    },
-    {
-      id: 7,
-      text: "What is the main function of an operating system?",
-      options: [
-        "Manage hardware and software resources",
-        "Store data",
-        "Transfer data",
-        "Delete data",
-      ],
-    },
-    {
-      id: 8,
-      text: "Which of the following is a storage device?",
-      options: ["Hard Drive", "Monitor", "Keyboard", "Mouse"],
-    },
-    {
-      id: 9,
-      text: "What does URL stand for?",
-      options: [
-        "Uniform Resource Locator",
-        "Uniform Resource Link",
-        "Universal Resource Locator",
-        "Universal Resource Link",
-      ],
-    },
-    {
-      id: 10,
-      text: "Which of the following is a web browser?",
-      options: [
-        "Google Chrome",
+      "id": 5,
+      "text": "Which of the following is an example of an operating system?",
+      "options": [
         "Microsoft Word",
-        "Adobe Photoshop",
-        "Windows Explorer",
-      ],
-    },
-    {
-      id: 11,
-      text: "What is the main function of a router?",
-      options: [
-        "Direct network traffic",
-        "Store data",
-        "Process data",
-        "Delete data",
-      ],
-    },
-    {
-      id: 12,
-      text: "Which of the following is an example of software?",
-      options: ["Microsoft Office", "Keyboard", "Monitor", "Mouse"],
-    },
-    {
-      id: 13,
-      text: "What does IP stand for in IP address?",
-      options: [
-        "Internet Protocol",
-        "Internet Provider",
-        "Internal Protocol",
-        "Internal Provider",
-      ],
-    },
-    {
-      id: 14,
-      text: "Which of the following is a type of network?",
-      options: ["LAN", "CPU", "RAM", "ROM"],
-    },
-    {
-      id: 15,
-      text: "What is the main function of a firewall?",
-      options: [
-        "Protect against unauthorized access",
-        "Store data",
-        "Process data",
-        "Delete data",
-      ],
-    },
-    {
-      id: 16,
-      text: "Which of the following is an example of an operating system?",
-      options: [
         "Windows",
-        "Microsoft Office",
         "Google Chrome",
-        "Adobe Photoshop",
-      ],
+        "Adobe Photoshop"
+      ]
     },
     {
-      id: 17,
-      text: "What does GUI stand for?",
-      options: [
-        "Graphical User Interface",
-        "Graphical User Internet",
-        "General User Interface",
-        "General User Internet",
-      ],
+      "id": 6,
+      "text": "What is the primary function of a compiler?",
+      "options": [
+        "To execute code line by line",
+        "To convert high-level code into machine code",
+        "To debug code",
+        "To store data"
+      ]
     },
     {
-      id: 18,
-      text: "Which of the following is a type of software application?",
-      options: ["Word Processor", "Keyboard", "Monitor", "Mouse"],
+      "id": 7,
+      "text": "What does HTML stand for?",
+      "options": [
+        "HyperText Markup Language",
+        "High-Level Text Machine Language",
+        "Hyperlink Text Management Language",
+        "Home Tool Markup Language"
+      ]
     },
     {
-      id: 19,
-      text: "What is the main function of a database?",
-      options: [
-        "Store and manage data",
-        "Process data",
-        "Transfer data",
-        "Delete data",
-      ],
+      "id": 8,
+      "text": "Which of the following is a database management system?",
+      "options": [
+        "MySQL",
+        "Python",
+        "Java",
+        "HTML"
+      ]
     },
     {
-      id: 20,
-      text: "Which of the following is an example of a search engine?",
-      options: [
-        "Google",
+      "id": 9,
+      "text": "What is the smallest unit of data in a computer?",
+      "options": [
+        "Byte",
+        "Bit",
+        "Kilobyte",
+        "Megabyte"
+      ]
+    },
+    {
+      "id": 10,
+      "text": "What does URL stand for?",
+      "options": [
+        "Uniform Resource Locator",
+        "Universal Resource Locator",
+        "Uniform Retrieval Locator",
+        "Universal Retrieval Locator"
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Which of the following is a web browser?",
+      "options": [
+        "Google Chrome",
         "Microsoft Word",
         "Adobe Photoshop",
-        "Windows Explorer",
-      ],
+        "Windows"
+      ]
     },
-  ];
+    {
+      "id": 12,
+      "text": "What is the full form of HTTP?",
+      "options": [
+        "HyperText Transfer Protocol",
+        "High-Level Text Transfer Protocol",
+        "Hyperlink Text Transfer Protocol",
+        "HyperText Transmission Protocol"
+      ]
+    },
+    {
+      "id": 13,
+      "text": "What is the purpose of a firewall?",
+      "options": [
+        "To block unauthorized access to a network",
+        "To increase internet speed",
+        "To store data",
+        "To process graphics"
+      ]
+    },
+    {
+      "id": 14,
+      "text": "What does BIOS stand for?",
+      "options": [
+        "Basic Input/Output System",
+        "Binary Input/Output System",
+        "Basic Internal Operating System",
+        "Binary Internal Operating System"
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Which of the following is a type of computer memory?",
+      "options": [
+        "RAM",
+        "CPU",
+        "GPU",
+        "USB"
+      ]
+    },
+    {
+      "id": 16,
+      "text": "What is the full form of PDF?",
+      "options": [
+        "Portable Document Format",
+        "Personal Data File",
+        "Printable Document Format",
+        "Public Data File"
+      ]
+    },
+    {
+      "id": 17,
+      "text": "Which of the following is a high-level programming language?",
+      "options": [
+        "Assembly Language",
+        "Machine Language",
+        "Python",
+        "Binary Code"
+      ]
+    },
+    {
+      "id": 18,
+      "text": "What is the purpose of an operating system?",
+      "options": [
+        "To manage hardware and software resources",
+        "To create documents",
+        "To browse the internet",
+        "To design graphics"
+      ]
+    },
+    {
+      "id": 19,
+      "text": "What is the full form of IP?",
+      "options": [
+        "Internet Protocol",
+        "Internal Protocol",
+        "Internet Provider",
+        "Internal Provider"
+      ]
+    },
+    {
+      "id": 20,
+      "text": "Which of the following is a type of computer network?",
+      "options": [
+        "LAN",
+        "CPU",
+        "RAM",
+        "GPU"
+      ]
+    },
+    {
+      "id": 21,
+      "text": "What is the full form of CSS?",
+      "options": [
+        "Cascading Style Sheets",
+        "Computer Style Sheets",
+        "Colorful Style Sheets",
+        "Creative Style Sheets"
+      ]
+    },
+    {
+      "id": 22,
+      "text": "Which of the following is a storage device?",
+      "options": [
+        "Hard Disk",
+        "CPU",
+        "RAM",
+        "GPU"
+      ]
+    },
+    {
+      "id": 23,
+      "text": "What is the full form of VPN?",
+      "options": [
+        "Virtual Private Network",
+        "Virtual Public Network",
+        "Visual Private Network",
+        "Visual Public Network"
+      ]
+    },
+    {
+      "id": 24,
+      "text": "Which of the following is a type of software?",
+      "options": [
+        "Operating System",
+        "Hard Disk",
+        "CPU",
+        "RAM"
+      ]
+    },
+    {
+      "id": 25,
+      "text": "What is the full form of GUI?",
+      "options": [
+        "Graphical User Interface",
+        "General User Interface",
+        "Graphical Unified Interface",
+        "General Unified Interface"
+      ]
+    },
+    {
+      "id": 26,
+      "text": "Which of the following is a type of computer virus?",
+      "options": [
+        "Trojan Horse",
+        "Firewall",
+        "Router",
+        "Switch"
+      ]
+    },
+    {
+      "id": 27,
+      "text": "What is the full form of DNS?",
+      "options": [
+        "Domain Name System",
+        "Dynamic Name System",
+        "Domain Network System",
+        "Dynamic Network System"
+      ]
+    },
+    {
+      "id": 28,
+      "text": "Which of the following is a type of computer port?",
+      "options": [
+        "USB",
+        "CPU",
+        "RAM",
+        "GPU"
+      ]
+    },
+    {
+      "id": 29,
+      "text": "What is the full form of API?",
+      "options": [
+        "Application Programming Interface",
+        "Application Program Interface",
+        "Advanced Programming Interface",
+        "Advanced Program Interface"
+      ]
+    },
+    {
+      "id": 30,
+      "text": "Which of the following is a type of computer keyboard?",
+      "options": [
+        "QWERTY",
+        "CPU",
+        "RAM",
+        "GPU"
+      ]
+    }
+  ]
   // Add more questions as needed
 
   res.status(200).json({ questions });
