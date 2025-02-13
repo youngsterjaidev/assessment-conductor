@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Assessment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="assessment-container">
+        <h1>Assessment</h1>
+
+        <!-- Student Information Form -->
+        <form id="student-info">
+            <label for="name">Name:</label>
+            <input required type="text" id="name" name="name" required>
+            <br>
+            <label for="section">Section:</label>
+            <input required type="text" id="section" name="section" required>
+            <br>
+            <label for="enrollment">Enrollment Number:</label>
+            <input required type="text" id="enrollment" name="enrollment" required>
+            <br>
+            <button type="submit" id="submit-btn">Submit</button>
+        </form>
+
+        <!-- Questions Container -->
+        <div id="question-container">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Force full-screen mode
+            enterFullScreen();
+
+            window.name = ''
+            window.section = ''
+            window.enrollment = ''
+
+            // Detect tab/window change
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    const name = window.name;
+                    const section = window.section;
+                    const enrollment = window.enrollment;
+
+                    if (!name || !section || !enrollment) {
+                        console.log("Student information not set up.");
+                        return;
+                    }
+
+                    // Log the incident to the server
+                    fetch('http://localhost:8000/log-incident', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name,
+                            enrollment,
+                            incident: 'Tab switch detected',
+                            timestamp: new Date().toISOString()
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Incident logged:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error logging incident:', error);
+                        });
+
+                    //alert("You switched tabs or opened another app. This is not allowed.");
+                }
+            });
+
+            // Load questions from the server
+            function loadQuestions() {
+                fetch('http://localhost:8000/api/questions')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("data", data)
+                        const questionContainer = document.getElementById('question-container');
+                        const formElement = document.createElement('form');
+                        data.questions.forEach(question => {
+                            const questionElement = document.createElement('div');
+                            questionElement.classList.add('question');
+                            questionElement.innerHTML = `
+                                <p>${question.text}</p>
+                                ${question.options.map(option => `
+                                    <label>
+                                        <input required type="radio" name="question${question.id}" value="${option}">
+                                        ${option}
+                                    </label>
+                                `).join('')}
+                            `;
+                            formElement.appendChild(questionElement);
+                        });
+                        questionContainer.appendChild(formElement);
+
+                        const submitButton = document.createElement('button');
+                        submitButton.type = 'submit';
+                        submitButton.textContent = 'Submit Assessment';
+                        formElement.appendChild(submitButton);
+
+                        formElement.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            const formData = new FormData(formElement);
+                            const data = {};
+                            formData.forEach((value, key) => {
+                                data[key] = value;
+                            });
+
+                            const { name, section, enrollment } = window;
+                            data.name = name;
+                            data.section = section;
+                            data.enrollment = enrollment;
+
+                            fetch('http://localhost:8000/submit-assessment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    alert('Assessment submitted successfully!');
+                                })
+                                .catch(error => {
+                                    console.error('Error submitting assessment:', error);
+                                });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading questions:', error);
+                    });
+            }
+
+            // Handle student info submission
+            document.getElementById('student-info').addEventListener('submit', function (e) {
+                e.preventDefault();
+                window.name = document.getElementById('name').value;
+                window.section = document.getElementById('section').value;
+                window.enrollment = document.getElementById('enrollment').value;
+
+                // Display the student's name on the page
+                const nameDisplay = document.createElement('h2');
+                nameDisplay.textContent = `Student: ${window.name}`;
+                document.body.insertBefore(nameDisplay, document.getElementById('assessment-container'));
+
+                // Load questions after student info is submitted
+                loadQuestions();
+            });
+
+            // Block right-click
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            });
+
+            // Block keyboard shortcuts
+            document.addEventListener('keydown', function (e) {
+                if (e.ctrlKey || e.altKey || e.metaKey) {
+                    e.preventDefault();
+                }
+            });
+
+            // Timer for assessment
+            let timeLeft = 1800; // 30 minutes
+            const timer = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("Time's up! Your assessment will be submitted automatically.");
+                    submitAssessment();
+                }
+            }, 1000);
+
+            // Enter full-screen mode
+            function enterFullScreen() {
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { // Firefox
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { // IE/Edge
+                    elem.msRequestFullscreen();
+                }
+            }
+
+            // Submit assessment
+            function submitAssessment() {
+                alert("Assessment submitted!");
+                // Redirect or show results
+            }
+        });
+    </script>
+</body>
+
+</html>
