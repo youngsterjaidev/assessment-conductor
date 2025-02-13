@@ -54,7 +54,7 @@
                     }
 
                     // Log the incident to the server
-                    fetch('http://localhost:8000/log-incident', {
+                    fetch('/log-incident', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -80,7 +80,7 @@
 
             // Load questions from the server
             function loadQuestions() {
-                fetch('http://localhost:8000/api/questions')
+                fetch('/api/questions')
                     .then(response => response.json())
                     .then(data => {
                         console.log("data", data)
@@ -120,7 +120,7 @@
                             data.section = section;
                             data.enrollment = enrollment;
 
-                            fetch('http://localhost:8000/submit-assessment', {
+                            fetch('/submit-assessment', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
